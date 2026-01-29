@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.io.*;
 public class MovieManager {
 	
@@ -9,7 +10,7 @@ public class MovieManager {
 	final static String delimiter = ","; // to separate the info in the files
 	
 	public static ArrayList<Movie> loadMovieList(){
-		ArrayList<Movie> moviesList = new ArrayList<Movie>();
+		ArrayList<Movie> movieList = new ArrayList<Movie>();
 		
 		String line;
 		String [] fields;
@@ -19,7 +20,7 @@ public class MovieManager {
 			while(line != null) {
 				fields = line.split(delimiter);
 				data = new Movie((fields[0]),(fields[1]),(fields[2]));
-				moviesList.add(data);//adding data to the list
+				movieList.add(data);//adding data to the list
 				line = in.readLine();//preping the while loop to either continue with the next line or grabing nothing form the file to end the loop 				
 			}
 		
@@ -28,7 +29,7 @@ public class MovieManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return moviesList;
+		return movieList;
 		
 	}
 	
@@ -50,7 +51,32 @@ public class MovieManager {
 		
 	}
 	
-	public static String addMovie() {
-		
+	public static void addMovie(ArrayList<Movie> movieList) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Enter Duration: ");
+		String duration = sc.nextLine();
+		System.out.println("Enter Movie Title: ");
+		String title = sc.nextLine();
+		System.out.println("Enter Movie Year:  ");
+		String year = sc.nextLine();
+		Movie data;
+		data = new Movie((duration),(title),(year));
+		movieList.add(data);
+		System.out.println("Saving Movies. . .");
+		System.out.println("Added movie to the data file.");
 	}
+	public static void displayMenu() {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Movie Management system");
+		System.out.println("1		Add New Movie and Save");
+		System.out.println("2		Generate List Of Movies Released in a Year");
+		System.out.println("3		Generate List of Random Movies");
+		System.out.println("4		Exit\n");
+		System.out.println("Enter an option:	");
+		int choice = sc.nextInt();
+		if(choice == 1) {
+			//addMovie();
+		}
+		
+		}
 }
