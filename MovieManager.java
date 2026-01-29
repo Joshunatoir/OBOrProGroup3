@@ -63,20 +63,33 @@ public class MovieManager {
 		data = new Movie((duration),(title),(year));
 		movieList.add(data);
 		System.out.println("Saving Movies. . .");
+		saveMovieListToFile(movieList);
 		System.out.println("Added movie to the data file.");
 	}
-	public static void displayMenu() {
+	public static void displayMenu(ArrayList<Movie> movieList) {
 		Scanner sc = new Scanner(System.in);
-		System.out.println("Movie Management system");
-		System.out.println("1		Add New Movie and Save");
-		System.out.println("2		Generate List Of Movies Released in a Year");
-		System.out.println("3		Generate List of Random Movies");
-		System.out.println("4		Exit\n");
-		System.out.println("Enter an option:	");
-		int choice = sc.nextInt();
-		if(choice == 1) {
-			//addMovie();
+		boolean run = true;
+		while(run == true) {
+			System.out.println("Movie Management system");
+			System.out.println("1		Add New Movie and Save");
+			System.out.println("2		Generate List Of Movies Released in a Year");
+			System.out.println("3		Generate List of Random Movies");
+			System.out.println("4		Exit\n");
+			System.out.println("Enter an option: ");
+			int choice = sc.nextInt();
+			if(choice == 1) {
+				addMovie(movieList);
+			}else if (choice == 2) {
+				generateMovieListInYear(movieList);
+			}else if (choice == 3) {
+				generateRandomMovieList(movieList);
+			}else if (choice == 4) {
+				System.out.println("Goodbye!");
+				run = false;
+			}else {
+				System.out.println("Invalid Option!");
+				
+			}
 		}
-		
-		}
+	}
 }
