@@ -1,0 +1,19 @@
+package sait.mms.application;
+
+import java.util.ArrayList;
+import sait.mms.manager.MovieManager;
+import sait.mms.problemdomain.Movie;
+
+public class AppDriver {
+    public static void main(String[] args) {
+
+        ArrayList<Movie> movieList = new ArrayList<>();
+        MovieManager manager = new MovieManager(movieList); 
+
+        manager.loadMovieList();
+        manager.displayMenu();
+        manager.saveMovieListToFile(); 
+    }
+}
+
+    
