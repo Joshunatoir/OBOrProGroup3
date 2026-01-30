@@ -19,7 +19,7 @@ public class MovieManager {
 			line = in.readLine();
 			while(line != null) {
 				fields = line.split(delimiter);
-				data = new Movie((fields[0]),(fields[1]),(fields[2]));
+				data = new Movie(Integer.parseInt(fields[0]),(fields[1]),Integer.parseInt(fields[2]));
 				movieList.add(data);//adding data to the list
 				line = in.readLine();//preping the while loop to either continue with the next line or grabing nothing form the file to end the loop 				
 			}
@@ -35,12 +35,12 @@ public class MovieManager {
 	
 	public static void saveMovieListToFile(ArrayList<Movie> movieList) {
 		if(movieList != null) {
-			try(PrintWriter out = new PrintWriter(
-					new BufferedWriter(new FileWriter(fileName)))){
+			try(PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(fileName)))){
 				for(Movie m : movieList) {
 					out.print(m.getDuration()+ delimiter);//print these things to file
 					out.print(m.getTitle()+ delimiter);
 					out.print(m.getYear());
+					out.println();
 					
 				}
 			} catch (IOException e) {
@@ -51,19 +51,33 @@ public class MovieManager {
 		
 	}
 	
+
+	
 	public static void addMovie(ArrayList<Movie> movieList) {
-		Scanner sc = new Scanner(System.in);
-		System.out.println("Enter Duration: ");
-		String duration = sc.nextLine();
-		System.out.println("Enter Movie Title: ");
-		String title = sc.nextLine();
-		System.out.println("Enter Movie Year:  ");
-		String year = sc.nextLine();
-		Movie data;
-		data = new Movie((duration),(title),(year));
-		movieList.add(data);
+		try (Scanner sc = new Scanner(System.in)) {
+			boolean loop = true;
+			while (loop == true) {
+				try {
+				System.out.println("Enter Duration: ");
+				int duration = Integer.parseInt(sc.nextLine().trim());
+				System.out.println("Enter Movie Title: ");
+				String title = sc.nextLine().trim();
+				System.out.println("Enter Movie Year:  ");
+				int year = Integer.parseInt(sc.nextLine().trim());
+				if (title.isBlank()) {
+					continue;
+				}
+				Movie data;
+				data = new Movie((duration),(title),(year));
+				movieList.add(data);
+				loop = false;
+				}catch (NumberFormatException e) {
+					System.out.println("Invalid input! Please try again.");
+				}
+				saveMovieListToFile(movieList);
+			}
+		}
 		System.out.println("Saving Movies. . .");
-		saveMovieListToFile(movieList);
 		System.out.println("Added movie to the data file.");
 	}
 	public static void displayMenu(ArrayList<Movie> movieList) {
@@ -76,7 +90,7 @@ public class MovieManager {
 			System.out.println("3		Generate List of Random Movies");
 			System.out.println("4		Exit\n");
 			System.out.println("Enter an option: ");
-			int choice = sc.nextInt();
+			int choice = Integer.parseInt(sc.nextLine());//getting the input from the user
 			if(choice == 1) {
 				addMovie(movieList);
 			}else if (choice == 2) {
