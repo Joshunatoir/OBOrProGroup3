@@ -50,6 +50,32 @@ public class MovieManager {
 		}
 		
 	}
+
+	public static void generateRandomMovieList(ArrayList<Movie> movieList) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("How many movies should be listed: ");
+		int quantity = Integer.parseInt(sc.nextLine());
+		
+		if (quantity <= 0 || quantity > movieList.size()) {
+			System.out.println("Invalid number.");
+			return;
+		}
+		
+		int totalDuration = 0;
+		Random rand = new Random();
+		
+		System.out.println("\nDuration   Year   Title");
+		
+		for (int i = 0; i < quantity; i++) {
+			int index = rand.nextInt(movieList.size());
+			Movie m = movieList.get(index);
+			
+			System.out.println(m);
+			totalDuration += m.getDuration();
+		}
+		
+		System.out.println("\nTotal duration: " + totalDuration + " minutes");
+	}
 	
 
 	
@@ -107,3 +133,4 @@ public class MovieManager {
 		}
 	}
 }
+
